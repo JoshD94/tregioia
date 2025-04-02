@@ -57,7 +57,7 @@ export default function About() {
       
       {/* Our Values Section */}
       <section className="mb-16 bg-pink-50 py-12 px-4 rounded-lg">
-        <h2 className="text-3xl font-bold text-center mb-10">Our Values</h2>
+        <h2 className="text-3xl font-bold text-center mb-10 text-black">Our Values</h2>
         <div className="grid md:grid-cols-3 gap-8">
           <div className="text-center p-6">
             <div className="bg-white rounded-full h-20 w-20 flex items-center justify-center mx-auto mb-4 shadow-md">

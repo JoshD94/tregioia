@@ -85,7 +85,8 @@ export default function Locations() {
     setShowStreetView(false); // Reset street view when selecting a new location
   };
   
-  const handleStreetViewClick = (e: React.MouseEvent, locationId: number) => {
+  // eslint-disable-next-line
+  const handleStreetViewClick = (e: React.MouseEvent, locationId: number) => { 
     e.stopPropagation();
     setShowStreetView(true); // Set to true when button is clicked
   };

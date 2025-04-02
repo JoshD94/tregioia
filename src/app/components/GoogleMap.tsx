@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Loader } from '@googlemaps/js-api-loader';
 
 interface Location {
   id: number;
@@ -11,7 +12,7 @@ interface Location {
   streetViewPov?: {
     heading: number;
     pitch: number;
-    zoom: number;
+    zoom?: number;  // Made zoom optional to match StreetViewPov type
   };
 }
 
@@ -27,61 +28,64 @@ export default function GoogleMap({ locations, selectedLocation, showStreetView 
   const [streetViewPanorama, setStreetViewPanorama] = useState<google.maps.StreetViewPanorama | null>(null);
   const markersRef = useRef<google.maps.Marker[]>([]);
   const infoWindowsRef = useRef<google.maps.InfoWindow[]>([]);
-  
+  const loaderRef = useRef<Loader | null>(null);
+
   useEffect(() => {
-    // Load Google Maps API
-    const loadGoogleMapsScript = () => {
-      // Check if the script is already loaded
-      if (!window.google) {
-        const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&callback=initMap`;
-        script.async = true;
-        script.defer = true;
-        document.head.appendChild(script);
-        
-        // Define the callback function
-        window.initMap = initializeMap;
-      } else {
+    if (!loaderRef.current) {
+      loaderRef.current = new Loader({
+        apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
+        version: 'weekly',
+        libraries: ['places', 'streetView'],
+      });
+    }
+
+    const loadMap = async () => {
+      try {
+        await loaderRef.current?.load();
         initializeMap();
+      } catch (error) {
+        console.error('Error loading Google Maps:', error);
       }
     };
-    
+
     const initializeMap = () => {
       if (!mapRef.current || !window.google) return;
-      
-      // Calculate center point based on locations
-      const bounds = new window.google.maps.LatLngBounds();
+
+      const bounds = new google.maps.LatLngBounds();
       locations.forEach(location => {
         bounds.extend({ lat: location.lat, lng: location.lng });
       });
-      
-      const newMap = new window.google.maps.Map(mapRef.current, {
-        zoom: 11,
-        mapTypeId: window.google.maps.MapTypeId.ROADMAP,
-        streetViewControl: true,
+
+      const newMap = new google.maps.Map(mapRef.current, {
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        center: bounds.getCenter(),
+        zoom: 11
       });
-      
+
       setMap(newMap);
-      
-      // Create street view panorama
+
       const panorama = new google.maps.StreetViewPanorama(mapRef.current, {
         visible: false,
-        position: { lat: locations[0].lat, lng: locations[0].lng }
+        position: locations[0] ? { lat: locations[0].lat, lng: locations[0].lng } : { lat: 0, lng: 0 }
       });
-      
+
       setStreetViewPanorama(panorama);
       newMap.setStreetView(panorama);
-      
-      // Add markers for each location
-      markersRef.current = locations.map(location => {
-        const marker = new window.google.maps.Marker({
+
+      // Clear previous markers
+      markersRef.current.forEach(marker => marker.setMap(null));
+      markersRef.current = [];
+      infoWindowsRef.current = [];
+
+      locations.forEach(location => {
+        const marker = new google.maps.Marker({
           position: { lat: location.lat, lng: location.lng },
           map: newMap,
           title: location.name,
-          animation: window.google.maps.Animation.DROP
+          animation: google.maps.Animation.DROP
         });
-        
-        const infoWindow = new window.google.maps.InfoWindow({
+
+        const infoWindow = new google.maps.InfoWindow({
           content: `
             <div style="max-width: 250px; padding: 10px;">
               <h3 style="font-weight: bold; margin-bottom: 5px;">${location.name}</h3>
@@ -91,300 +95,110 @@ export default function GoogleMap({ locations, selectedLocation, showStreetView 
             </div>
           `,
         });
-        
+
+        markersRef.current.push(marker);
         infoWindowsRef.current.push(infoWindow);
-        
+
         marker.addListener('click', () => {
-          // Close all info windows first
           infoWindowsRef.current.forEach(iw => iw.close());
-          // Open this info window
           infoWindow.open(newMap, marker);
         });
-        
-        return marker;
       });
-      
-      // Fit map to bounds of all markers
+
       newMap.fitBounds(bounds);
-      
-      // Adjust zoom if too close
-      const listener = window.google.maps.event.addListener(newMap, "idle", () => {
-        if (newMap.getZoom() > 16) newMap.setZoom(16);
-        window.google.maps.event.removeListener(listener);
+      const listener = google.maps.event.addListener(newMap, "idle", () => {
+        const currentZoom = newMap.getZoom();
+        if (currentZoom && currentZoom > 16) {  // Added null check for zoom
+          newMap.setZoom(16);
+        }
+        google.maps.event.removeListener(listener);
       });
     };
-    
-    // Add global initMap function to window
-    window.initMap = initializeMap;
-    
-    // Load the script
-    loadGoogleMapsScript();
-    
-    // Cleanup function
+
+    loadMap();
+
     return () => {
-      // Remove global callback when component unmounts
-      if (window.initMap) {
-        delete window.initMap;
+      markersRef.current.forEach(marker => marker.setMap(null));
+      if (map) {
+        google.maps.event.clearInstanceListeners(map);
       }
     };
   }, [locations]);
-  
-  // Effect to handle selected location changes
+
   useEffect(() => {
-    if (map && selectedLocation !== null) {
-      // Find the selected location
-      const location = locations.find(loc => loc.id === selectedLocation);
-      
-      if (location) {
-        // Close all info windows
-        infoWindowsRef.current.forEach(iw => iw.close());
-        
-        // Find the marker for this location
-        const markerIndex = locations.findIndex(loc => loc.id === selectedLocation);
-        if (markerIndex !== -1 && markersRef.current[markerIndex]) {
-          const marker = markersRef.current[markerIndex];
-          
-          // Zoom to this location
-          map.setZoom(18);
-          map.panTo({ lat: location.lat, lng: location.lng });
-          
-          // Open the info window for this marker
-          if (infoWindowsRef.current[markerIndex]) {
-            infoWindowsRef.current[markerIndex].open(map, marker);
-          }
-        }
-      }
-    } else if (map) {
-      // If no location is selected, fit to all markers
-      const bounds = new window.google.maps.LatLngBounds();
-      locations.forEach(location => {
-        bounds.extend({ lat: location.lat, lng: location.lng });
-      });
-      map.fitBounds(bounds);
-      
-      // Close all info windows
-      infoWindowsRef.current.forEach(iw => iw.close());
-      
-      // Hide street view if it's visible
-      if (streetViewPanorama && streetViewPanorama.getVisible()) {
-        streetViewPanorama.setVisible(false);
-      }
-    }
-  }, [selectedLocation, map, locations, streetViewPanorama]);
-  
-  // Effect to handle street view display when button is clicked
-  useEffect(() => {
-    if (map && streetViewPanorama && selectedLocation !== null && showStreetView) {
-      const location = locations.find(loc => loc.id === selectedLocation);
-      if (location) {
-        // Check if Street View is available at this location
-        const streetViewService = new google.maps.StreetViewService();
-        streetViewService.getPanorama(
-          { location: { lat: location.lat, lng: location.lng }, radius: 100 },
-          (data, status) => {
-            if (status === google.maps.StreetViewStatus.OK) {
-              // Set panorama position and point of view
-              streetViewPanorama.setPosition({ lat: location.lat, lng: location.lng });
-              
-              // Use location-specific POV if available
-              if (location.streetViewPov) {
-                streetViewPanorama.setPov({
-                  heading: location.streetViewPov.heading,
-                  pitch: location.streetViewPov.pitch,
-                  zoom: location.streetViewPov.zoom || 1
-                });
-              } else {
-                // Default POV
-                streetViewPanorama.setPov({
-                  heading: 34,
-                  pitch: 10,
-                  zoom: 1
-                });
-              }
-              
-              // Force panorama to be visible
-              streetViewPanorama.setVisible(true);
-              
-              // Add a small delay to ensure the street view is shown
-              setTimeout(() => {
-                if (streetViewPanorama && !streetViewPanorama.getVisible()) {
-                  streetViewPanorama.setVisible(true);
-                }
-              }, 300);
-            } else {
-              alert("Street View is not available at this location.");
-            }
-          }
-        );
-      }
-    } else if (streetViewPanorama && !showStreetView) {
-      // Hide street view when showStreetView is set to false
+    if (!map || selectedLocation === null) return;
+
+    const location = locations.find(loc => loc.id === selectedLocation);
+    if (!location) return;
+
+    const markerIndex = locations.findIndex(loc => loc.id === selectedLocation);
+    if (markerIndex === -1 || !markersRef.current[markerIndex]) return;
+
+    const marker = markersRef.current[markerIndex];
+    infoWindowsRef.current.forEach(iw => iw.close());
+    
+    map.setZoom(18);
+    map.panTo({ lat: location.lat, lng: location.lng });
+    infoWindowsRef.current[markerIndex].open(map, marker);
+
+    if (!showStreetView && streetViewPanorama?.getVisible()) {
       streetViewPanorama.setVisible(false);
     }
+  }, [selectedLocation, map, locations, streetViewPanorama, showStreetView]);
+
+  useEffect(() => {
+    if (!map || !streetViewPanorama || selectedLocation === null || !showStreetView) {
+      if (streetViewPanorama?.getVisible()) {
+        streetViewPanorama.setVisible(false);
+      }
+      return;
+    }
+
+    const location = locations.find(loc => loc.id === selectedLocation);
+    if (!location) return;
+
+    const streetViewService = new google.maps.StreetViewService();
+    streetViewService.getPanorama(
+      { location: { lat: location.lat, lng: location.lng }, radius: 100 },
+      (data, status) => {
+        if (status !== google.maps.StreetViewStatus.OK) {
+          alert("Street View is not available at this location.");
+          return;
+        }
+
+        streetViewPanorama.setPosition({ lat: location.lat, lng: location.lng });
+        
+        // Fixed StreetViewPov type issue
+        const pov: google.maps.StreetViewPov = {
+          heading: location.streetViewPov?.heading || 34,
+          pitch: location.streetViewPov?.pitch || 10
+        };
+        
+        streetViewPanorama.setPov(pov);
+        streetViewPanorama.setVisible(true);
+      }
+    );
   }, [selectedLocation, map, streetViewPanorama, locations, showStreetView]);
 
   return (
     <div className="relative h-full">
       <div 
         ref={mapRef} 
-        className="w-full h-160 rounded-lg shadow-md"
+        className="w-full h-90 md:h-160 rounded-lg shadow-md"
       >
-        {/* Map will be rendered here */}
         <div className="flex items-center justify-center h-full text-gray-500">
           Loading map...
         </div>
       </div>
       
-      {streetViewPanorama && streetViewPanorama.getVisible && streetViewPanorama.getVisible() && (
+      {streetViewPanorama?.getVisible() && (
         <button
           className="absolute top-4 right-4 bg-white px-4 py-2 rounded shadow z-10 border border-pink-500"
-          onClick={() => {
-            if (streetViewPanorama) {
-              streetViewPanorama.setVisible(false);
-            }
-          }}
+          onClick={() => streetViewPanorama?.setVisible(false)}
         >
           Exit Street View
         </button>
       )}
     </div>
   );
-}
-
-// Add TypeScript declaration for window.initMap and window.google
-declare global {
-  interface Window {
-    initMap?: () => void;
-    google: typeof google;
-  }
-}
-
-// Google Maps types
-declare namespace google.maps {
-  class Map {
-    constructor(mapDiv: Element, opts?: MapOptions);
-    setZoom(zoom: number): void;
-    getZoom(): number;
-    setCenter(latLng: LatLng | LatLngLiteral): void;
-    panTo(latLng: LatLng | LatLngLiteral): void;
-    fitBounds(bounds: LatLngBounds | LatLngBoundsLiteral): void;
-    setStreetView(panorama: StreetViewPanorama): void;
-  }
-
-  interface StreetViewPov {
-    heading: number;
-    pitch: number;
-    zoom?: number;
-  }
-
-  class StreetViewPanorama {
-    constructor(container: Element, opts?: StreetViewPanoramaOptions);
-    setPosition(latLng: LatLng | LatLngLiteral): void;
-    setVisible(visible: boolean): void;
-    getVisible(): boolean;
-    setPov(pov: StreetViewPov): void;
-  }
-
-  class StreetViewService {
-    getPanorama(request: StreetViewLocationRequest, callback: (data: StreetViewPanoramaData, status: StreetViewStatus) => void): void;
-  }
-
-  class Marker {
-    constructor(opts?: MarkerOptions);
-    addListener(eventName: string, handler: Function): MapsEventListener;
-    setMap(map: Map | null): void;
-  }
-
-  class InfoWindow {
-    constructor(opts?: InfoWindowOptions);
-    open(map?: Map, anchor?: MVCObject): void;
-    close(): void;
-  }
-
-  class LatLngBounds {
-    constructor();
-    extend(latLng: LatLng | LatLngLiteral): LatLngBounds;
-  }
-
-  class LatLng {
-    constructor(lat: number, lng: number);
-  }
-
-  interface LatLngLiteral {
-    lat: number;
-    lng: number;
-  }
-
-  interface LatLngBoundsLiteral {
-    east: number;
-    north: number;
-    south: number;
-    west: number;
-  }
-
-  interface MapOptions {
-    zoom?: number;
-    center?: LatLng | LatLngLiteral;
-    mapTypeId?: string;
-    streetViewControl?: boolean;
-  }
-
-  interface MarkerOptions {
-    position?: LatLng | LatLngLiteral;
-    map?: Map;
-    title?: string;
-    animation?: any;
-  }
-
-  interface InfoWindowOptions {
-    content?: string | Element;
-  }
-
-  interface StreetViewPanoramaOptions {
-    position?: LatLng | LatLngLiteral;
-    visible?: boolean;
-  }
-
-  interface StreetViewLocationRequest {
-    location?: LatLng | LatLngLiteral;
-    radius?: number;
-  }
-
-  interface StreetViewPanoramaData {
-    location?: StreetViewLocation;
-  }
-
-  interface StreetViewLocation {
-    latLng?: LatLng;
-    pano?: string;
-  }
-
-  interface MapsEventListener {
-    remove(): void;
-  }
-
-  interface MVCObject {}
-
-  const event: {
-    addListener(instance: Object, eventName: string, handler: Function): MapsEventListener;
-    removeListener(listener: MapsEventListener): void;
-  };
-
-  enum StreetViewStatus {
-    OK = 'OK',
-    UNKNOWN_ERROR = 'UNKNOWN_ERROR',
-    ZERO_RESULTS = 'ZERO_RESULTS'
-  }
-
-  enum MapTypeId {
-    ROADMAP = 'roadmap',
-    SATELLITE = 'satellite',
-    HYBRID = 'hybrid',
-    TERRAIN = 'terrain'
-  }
-
-  enum Animation {
-    BOUNCE = 1,
-    DROP = 2
-  }
 }

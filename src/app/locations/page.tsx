@@ -1,6 +1,7 @@
 "use client";
 import GoogleMap from '@/app/components/GoogleMap';
 import { useState } from 'react';
+import { MapPinIcon } from '@heroicons/react/24/outline';
 
 export default function Locations() {
   const [selectedLocation, setSelectedLocation] = useState<number | null>(null);
@@ -95,12 +96,12 @@ export default function Locations() {
     : "Our Locations";
 
   return (
-    <div className="container mx-auto px-4 py-12 text-black">
-      <h1 className="text-4xl font-bold text-center mb-8 text-white">{pageTitle}</h1>
+    <div className="container mx-auto px-4 py-6 md:py-12 text-black">
+      <h1 className="text-2xl md:text-4xl font-bold text-center mb-4 md:mb-8 text-white">{pageTitle}</h1>
       
       <div className="flex flex-col md:flex-row gap-8">
         {/* Left side - Map */}
-        <div className="w-full md:w-1/2 sticky top-0 h-160">
+        <div className="w-full md:w-1/2 sticky top-0 h-80 md:h-160">
           <GoogleMap 
             locations={locations} 
             selectedLocation={selectedLocation}
@@ -117,7 +118,7 @@ export default function Locations() {
                 className={`bg-white rounded-lg shadow-md p-6 cursor-pointer transition-all duration-300 ${selectedLocation === location.id ? 'ring-2 ring-pink-500' : 'hover:shadow-lg'}`}
                 onClick={() => handleLocationClick(location.id)}
               >
-                <h2 className="text-xl font-bold mb-3">{location.name}</h2>
+                <h2 className="text-xl font-bold mb-3 inline-flex items-center"><MapPinIcon className="h-4 w-4 mr-1" /> {location.name}</h2>
                 <p className="mb-2 text-gray-700">{location.address}</p>
                 <p className="mb-2">
                   <span className="font-medium">Phone: </span>

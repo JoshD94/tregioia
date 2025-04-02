@@ -39,7 +39,7 @@ export default function Contact() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
             <h2 className="text-2xl font-bold mb-4">Thank You!</h2>
-            <p className="text-lg mb-6">Your message has been sent. We'll get back to you as soon as possible.</p>
+            <p className="text-lg mb-6">Your message has been sent. We&apos;ll get back to you as soon as possible.</p>
             <button 
               onClick={() => setIsSubmitted(false)}
               className="bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-6 rounded-full transition-colors"

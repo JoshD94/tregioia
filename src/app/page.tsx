@@ -88,7 +88,7 @@ export default function Home() {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-6">Want to Know More?</h2>
           <p className="text-base sm:text-lg md:text-xl mb-5 sm:mb-8 max-w-2xl mx-auto">
-            Have questions about our ice cream, locations, or want to place a special order? We'd love to hear from you!
+            Have questions about our ice cream, locations, or want to place a special order? We&apos;d love to hear from you!
           </p>
           <Link 
             href="/contact" 

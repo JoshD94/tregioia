@@ -119,6 +119,7 @@ export default function FlavorSlider() {
         sliderRef.current!.style.transition = 'none';
         setCurrentIndex(0);
         // Force a reflow
+        // eslint-disable-next-line
         sliderRef.current!.offsetHeight;
         sliderRef.current!.style.transition = 'transform 500ms ease';
       }
@@ -128,6 +129,7 @@ export default function FlavorSlider() {
         sliderRef.current!.style.transition = 'none';
         setCurrentIndex(flavors.length - 1);
         // Force a reflow
+        // eslint-disable-next-line
         sliderRef.current!.offsetHeight;
         sliderRef.current!.style.transition = 'transform 500ms ease';
       }

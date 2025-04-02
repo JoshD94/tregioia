@@ -34,13 +34,13 @@ export default function About() {
           <div className="md:w-1/2">
             <h2 className="text-3xl font-bold mb-6">Our Story</h2>
             <p className="text-lg mb-4 text-white">
-              Tregioia Creamery began as a small family operation in 2008. What started as a hobby making ice cream for friends and family quickly grew into a passion project when Maria Tregioia decided to share her delicious creations with the world.
+              Tregioia Creamery began as a small family operation in 2008. What started as a hobby making ice cream for friends and family quickly grew into a passion project when Winny decided to share her delicious creations with the world.
             </p>
             <p className="text-lg mb-4 text-white">
-              Drawing from her Italian heritage and family recipes, Maria created a collection of ice cream flavors that were both nostalgic and innovative. The response was overwhelming, and within a year, the first Tregioia Creamery shop opened its doors.
+              Drawing from her Italian heritage and family recipes, Winny created a collection of ice cream flavors that were both nostalgic and innovative. The response was overwhelming, and within a year, the first Tregioia Creamery shop opened its doors.
             </p>
             <p className="text-lg mb-4 text-white">
-              Today, with five locations across the city, we remain committed to Maria's original vision: creating delicious, healthy ice cream using only the purest ingredients and traditional methods.
+              Today, with five locations across the city, we remain committed to Winny&apos;s original vision: creating delicious, healthy ice cream using only the purest ingredients and traditional methods.
             </p>
           </div>
           <div className="md:w-1/2 relative h-80 w-full md:h-96">
@@ -86,7 +86,7 @@ export default function About() {
               </svg>
             </div>
             <h3 className="text-xl font-semibold mb-3 text-black">Community Focus</h3>
-            <p className="text-black">We're proud to be part of our local community, supporting neighborhood events and partnering with local businesses.</p>
+            <p className="text-black">We&apos;re proud to be part of our local community, supporting neighborhood events and partnering with local businesses.</p>
           </div>
         </div>
       </section>

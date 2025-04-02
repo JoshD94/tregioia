@@ -77,7 +77,7 @@ export default function Flavors() {
         <h2 className="text-3xl font-bold mb-8">Signature Flavors</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {regularFlavors.map((flavor, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg">
               <div className="h-72 relative">
                 <Image 
                   src={flavor.image} 
@@ -99,7 +99,7 @@ export default function Flavors() {
         <h2 className="text-3xl font-bold mb-8">Seasonal Specials</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {seasonalFlavors.map((flavor, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg">
               <div className="h-72 relative">
                 <Image 
                   src={flavor.image} 

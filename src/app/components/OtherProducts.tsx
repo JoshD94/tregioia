@@ -41,7 +41,7 @@ export default function OtherProducts({ title = "Everything Else We Offer", back
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">{title}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {products.map((product, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg">
               <div className="relative h-40 sm:h-48">
                 <Image 
                   src={product.image} 

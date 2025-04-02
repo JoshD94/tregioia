@@ -18,55 +18,104 @@ export default function GoogleMap({ locations }: GoogleMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
-    // This would be the actual implementation with the Google Maps API
-    // You'll need to add the Google Maps script to your project and use your API key
-    // For demonstration purposes, this is a placeholder
-    const loadGoogleMaps = () => {
-      if (window.google && window.google.maps && mapRef.current) {
-        const map = new window.google.maps.Map(mapRef.current, {
-          center: { lat: 39.8283, lng: -98.5795 }, // Center of US
-          zoom: 4,
-        });
+    // Load Google Maps API
+    const loadGoogleMapsScript = () => {
+      // Check if the script is already loaded
+      if (!window.google) {
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&callback=initMap`;
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
         
-        locations.forEach(location => {
-          const marker = new window.google.maps.Marker({
-            position: { lat: location.lat, lng: location.lng },
-            map: map,
-            title: location.name,
-          });
-          
-          const infoWindow = new window.google.maps.InfoWindow({
-            content: `
-              <div>
-                <h3 style="font-weight: bold; margin-bottom: 5px;">${location.name}</h3>
-                <p>${location.address}</p>
-                <p>${location.phone}</p>
-                <p>${location.hours}</p>
-              </div>
-            `,
-          });
-          
-          marker.addListener('click', () => {
-            infoWindow.open(map, marker);
-          });
-        });
+        // Define the callback function
+        window.initMap = initializeMap;
+      } else {
+        initializeMap();
       }
     };
     
-    // In a real implementation, you would load the Google Maps script here
-    loadGoogleMaps();
+    const initializeMap = () => {
+      if (!mapRef.current || !window.google) return;
+      
+      // Calculate center point based on locations
+      const bounds = new window.google.maps.LatLngBounds();
+      locations.forEach(location => {
+        bounds.extend({ lat: location.lat, lng: location.lng });
+      });
+      
+      const map = new window.google.maps.Map(mapRef.current, {
+        zoom: 11,
+        mapTypeId: window.google.maps.MapTypeId.ROADMAP,
+      });
+      
+      // Add markers for each location
+      locations.forEach(location => {
+        const marker = new window.google.maps.Marker({
+          position: { lat: location.lat, lng: location.lng },
+          map: map,
+          title: location.name,
+          animation: window.google.maps.Animation.DROP
+        });
+        
+        const infoWindow = new window.google.maps.InfoWindow({
+          content: `
+            <div style="max-width: 250px; padding: 10px;">
+              <h3 style="font-weight: bold; margin-bottom: 5px;">${location.name}</h3>
+              <p style="margin-bottom: 5px;">${location.address}</p>
+              <p style="margin-bottom: 5px;"><strong>Phone:</strong> ${location.phone}</p>
+              <p style="margin-bottom: 0;"><strong>Hours:</strong> ${location.hours}</p>
+            </div>
+          `,
+        });
+        
+        marker.addListener('click', () => {
+          infoWindow.open(map, marker);
+        });
+      });
+      
+      // Fit map to bounds of all markers
+      map.fitBounds(bounds);
+      
+      // Adjust zoom if too close
+      const listener = window.google.maps.event.addListener(map, "idle", () => {
+        if (map.getZoom() > 16) map.setZoom(16);
+        window.google.maps.event.removeListener(listener);
+      });
+    };
+    
+    // Add global initMap function to window
+    window.initMap = initializeMap;
+    
+    // Load the script
+    loadGoogleMapsScript();
+    
+    // Cleanup function
+    return () => {
+      // Remove global callback when component unmounts
+      if (window.initMap) {
+        delete window.initMap;
+      }
+    };
   }, [locations]);
   
   return (
     <div 
       ref={mapRef} 
       className="w-full h-[500px] rounded-lg shadow-md"
-      style={{ background: '#f0f0f0' }}
     >
       {/* Map will be rendered here */}
       <div className="flex items-center justify-center h-full text-gray-500">
-        Google Maps will be displayed here with all 5 locations
+        Loading map...
       </div>
     </div>
   );
+}
+
+// Add TypeScript declaration for window.initMap and window.google
+declare global {
+  interface Window {
+    initMap?: () => void;
+    google: any;
+  }
 }

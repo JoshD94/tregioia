@@ -67,7 +67,7 @@ export default function Home() {
                 alt="Making ice cream at Tregioia" 
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
-                style={{objectFit: 'cover'}}
+                style={{objectFit: 'cover', objectPosition: 'center 80%'}}
                 className="rounded-lg shadow-md"
               />
             </div>

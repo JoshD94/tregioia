@@ -13,7 +13,20 @@ const lora = Lora({
 export const metadata: Metadata = {
   title: 'Tregioia Creamery',
   description: 'Artisanal ice cream made with simple, natural ingredients',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
+  icons: {
+    icon: [
+      { url: '/images/favicon-16x16.png', sizes: '16x16' },
+      { url: '/images/favicon-32x32.png', sizes: '32x32' }
+    ],
+    apple: '/images/apple-touch-icon.png',
+    shortcut: '/images/logo.png',
+  },
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export default function RootLayout({

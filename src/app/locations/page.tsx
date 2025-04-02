@@ -102,7 +102,7 @@ export default function Locations() {
       
       <div className="flex flex-col md:flex-row gap-8">
         {/* Left side - Map */}
-        <div className="w-full md:w-1/2 sticky top-0 h-80 md:h-160">
+        <div className="w-full md:w-1/2 sticky top-0 h-60 md:h-160">
           <GoogleMap 
             locations={locations} 
             selectedLocation={selectedLocation}

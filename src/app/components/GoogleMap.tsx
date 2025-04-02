@@ -184,7 +184,7 @@ export default function GoogleMap({ locations, selectedLocation, showStreetView 
     <div className="relative h-full">
       <div 
         ref={mapRef} 
-        className="w-full h-90 md:h-160 rounded-lg shadow-md"
+        className="w-full h-70 md:h-160 rounded-lg shadow-md"
       >
         <div className="flex items-center justify-center h-full text-gray-500">
           Loading map...

@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { Lora } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 
 const lora = Lora({ 
   subsets: ['latin'],
@@ -39,6 +40,7 @@ export default function RootLayout({
       <body className={lora.className}>
         <Header />
         <main>{children}</main>
+        <Analytics />
         <Footer />
       </body>
     </html>

@@ -12,22 +12,21 @@ const lora = Lora({
 });
 
 export const metadata: Metadata = {
-  title: 'Tregioia Creamery - Es Krim Alami Jakarta & Tangerang | Natural Ice Cream',
-  description: 'Es krim alami terbaik di Jakarta & Tangerang. Tregioia Creamery menyajikan gelato artisan berkualitas premium tanpa bahan pengawet buatan. 6 lokasi: Alam Sutera, Hublife, Citra8, Futopia, YOMS Serpong, Maggiore Square.',
+  title: 'Tregioia Creamery - Natural Ice Cream Jakarta & Tangerang | Artisanal Gelato',
+  description: 'Premium natural ice cream in Jakarta & Tangerang. Tregioia Creamery serves artisanal gelato made with pure ingredients, no artificial preservatives. 6 locations: Alam Sutera, Hublife, Citra8, Futopia, YOMS Serpong, Maggiore Square.',
   keywords: [
-    'es krim alami Jakarta',
-    'natural ice cream Jakarta', 
-    'gelato artisan Jakarta',
-    'es krim sehat Tangerang',
-    'artisanal ice cream Serpong',
+    'natural ice cream Jakarta',
+    'artisanal gelato Jakarta',
+    'premium ice cream Tangerang',
     'organic ice cream Jakarta',
     'handmade gelato Jakarta',
-    'premium ice cream Tangerang',
-    'es krim tanpa pengawet',
+    'ice cream no preservatives',
     'gelato Alam Sutera',
     'ice cream Gading Serpong',
     'maggiore square ice cream',
-    'pagedangan tangerang gelato',
+    'natural ice cream Serpong',
+    'es krim alami Jakarta',
+    'gelato artisan Jakarta',
     'Tregioia Creamery'
   ],
   authors: [{ name: 'Tregioia Creamery' }],
@@ -43,8 +42,8 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'Tregioia Creamery - Es Krim Alami Terbaik Jakarta & Tangerang',
-    description: 'Es krim alami premium tanpa bahan pengawet buatan. 6 lokasi di Jakarta & Tangerang: Alam Sutera, Hublife, Citra8, Futopia, YOMS Serpong, Maggiore Square.',
+    title: 'Tregioia Creamery - Premium Natural Ice Cream Jakarta & Tangerang',
+    description: 'Premium natural ice cream with no artificial preservatives. 6 locations in Jakarta & Tangerang: Alam Sutera, Hublife, Citra8, Futopia, YOMS Serpong, Maggiore Square.',
     url: 'https://tregioia.com',
     siteName: 'Tregioia Creamery',
     locale: 'id_ID',
@@ -54,14 +53,14 @@ export const metadata: Metadata = {
         url: '/images/img10.jpg',
         width: 1200,
         height: 630,
-        alt: 'Tregioia Creamery - Es Krim Alami Jakarta Tangerang',
+        alt: 'Tregioia Creamery - Natural Ice Cream Jakarta Tangerang',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Tregioia Creamery - Es Krim Alami Jakarta & Tangerang',
-    description: 'Es krim alami premium tanpa bahan pengawet buatan di Jakarta & Tangerang',
+    title: 'Tregioia Creamery - Natural Ice Cream Jakarta & Tangerang',
+    description: 'Premium natural ice cream with no artificial preservatives in Jakarta & Tangerang',
     images: ['/images/img10.jpg'],
   },
   robots: {
@@ -100,7 +99,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Tregioia Creamery",
-    "description": "Es krim alami premium tanpa bahan pengawet buatan di Jakarta & Tangerang",
+    "description": "Premium natural ice cream with no artificial preservatives in Jakarta & Tangerang",
     "url": "https://tregioia.com",
     "logo": "https://tregioia.com/images/logo.png",
     "image": "https://tregioia.com/images/img10.jpg",
@@ -180,7 +179,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="id">
+    <html lang="en">
       <head>
         <script
           type="application/ld+json"

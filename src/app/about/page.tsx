@@ -3,19 +3,19 @@ import Image from 'next/image';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Tentang Kami - Tregioia Creamery | Sejarah Es Krim Alami Jakarta',
-  description: 'Pelajari sejarah Tregioia Creamery sejak 2008. Tim ahli es krim alami kami menciptakan gelato artisan terbaik di Jakarta & Tangerang tanpa bahan pengawet buatan.',
+  title: 'About Us - Tregioia Creamery | Natural Ice Cream History Jakarta',
+  description: 'Learn about Tregioia Creamery history since 2008. Our natural ice cream experts create the finest artisanal gelato in Jakarta & Tangerang without artificial preservatives.',
   keywords: [
-    'sejarah tregioia creamery',
-    'es krim alami jakarta',
-    'tim gelato artisan',
+    'tregioia creamery history',
+    'natural ice cream jakarta',
+    'artisan gelato team',
     'winny setiady founder',
-    'tentang tregioia',
-    'es krim tradisional jakarta'
+    'about tregioia',
+    'traditional ice cream jakarta'
   ],
   openGraph: {
-    title: 'Tentang Tregioia Creamery - Sejarah Es Krim Alami Jakarta',
-    description: 'Sejarah Tregioia Creamery sejak 2008 sebagai pembuat es krim alami terbaik di Jakarta & Tangerang',
+    title: 'About Tregioia Creamery - Natural Ice Cream History Jakarta',
+    description: 'Tregioia Creamery history since 2008 as the finest natural ice cream maker in Jakarta & Tangerang',
     images: ['/images/shop1.jpg'],
   },
 };

@@ -51,8 +51,10 @@ export default function Footer() {
           <div className="mt-6 md:mt-0">
             <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Contact Info</h3>
             <address className="not-italic text-sm sm:text-base">
-              <p className="mb-2">123 Main Street, Anytown, USA</p>
-              <p className="mb-2">Phone: (555) 123-4567</p>
+              <p className="mb-2">Ruko Element, Jl. Jalur Sutera No.03 kav 25BC no C</p>
+              <p className="mb-2">Pakualam, Serpong Utara</p>
+              <p className="mb-2">South Tangerang City, Banten 15320</p>
+              <p className="mb-2">Phone: +62 21 30030598</p>
               <p className="mb-2">Email: hello@tregioiacreamery.com</p>
             </address>
           </div>

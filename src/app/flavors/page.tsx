@@ -3,21 +3,21 @@ import Image from 'next/image';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Menu Rasa Es Krim - Tregioia Creamery | Gelato Artisan Jakarta',
-  description: 'Jelajahi menu lengkap rasa es krim alami Tregioia Creamery. Vanilla Bean, Chocolate Decadence, Strawberry Fields dan rasa seasonal spesial lainnya di Jakarta & Tangerang.',
+  title: 'Ice Cream Flavors Menu - Tregioia Creamery | Artisan Gelato Jakarta',
+  description: 'Explore our complete natural ice cream flavors menu at Tregioia Creamery. Vanilla Bean, Chocolate Decadence, Strawberry Fields and special seasonal flavors in Jakarta & Tangerang.',
   keywords: [
-    'menu es krim tregioia',
-    'rasa gelato artisan',
+    'tregioia ice cream menu',
+    'artisan gelato flavors',
     'vanilla bean ice cream',
     'chocolate decadence',
     'strawberry fields',
     'seasonal ice cream flavors',
-    'menu gelato jakarta',
-    'es krim alami rasa'
+    'gelato menu jakarta',
+    'natural ice cream flavors'
   ],
   openGraph: {
-    title: 'Menu Rasa Es Krim Alami - Tregioia Creamery Jakarta',
-    description: 'Menu lengkap rasa es krim alami dan gelato artisan Tregioia Creamery di Jakarta & Tangerang',
+    title: 'Natural Ice Cream Flavors Menu - Tregioia Creamery Jakarta',
+    description: 'Complete menu of natural ice cream and artisan gelato flavors at Tregioia Creamery in Jakarta & Tangerang',
     images: ['/images/img1.jpg'],
   },
 };

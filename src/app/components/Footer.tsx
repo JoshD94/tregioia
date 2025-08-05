@@ -55,7 +55,6 @@ export default function Footer() {
               <p className="mb-2">Pakualam, Serpong Utara</p>
               <p className="mb-2">South Tangerang City, Banten 15320</p>
               <p className="mb-2">Phone: +62 21 30030598</p>
-              <p className="mb-2">Email: hello@tregioiacreamery.com</p>
             </address>
           </div>
         </div>

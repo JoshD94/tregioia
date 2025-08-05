@@ -142,13 +142,21 @@ export default function FlavorSlider() {
     }
   }, [currentIndex, flavors.length, transitioning]);
 
+  // Calculate transform based on current index and screen size
+  const getTransform = useCallback(() => {
+    // Calculate the item width based on how many items should be shown
+    const itemWidthPercent = 100 / itemsToShow;
+    const translateX = -(itemWidthPercent * (currentIndex + itemsToShow));
+    return `translateX(${translateX}%)`;
+  }, [itemsToShow, currentIndex]);
+
   // Initialize slider position
   useEffect(() => {
     if (sliderRef.current) {
       // Position at the first real item (after clones)
       sliderRef.current.style.transform = getTransform();
     }
-  }, []);
+  }, [getTransform]);
 
   const nextSlide = () => {
     if (transitioning) return;
@@ -162,13 +170,6 @@ export default function FlavorSlider() {
     setCurrentIndex(prev => prev - 1);
   };
 
-  // Calculate transform based on current index and screen size
-  const getTransform = () => {
-    // Calculate the item width based on how many items should be shown
-    const itemWidthPercent = 100 / itemsToShow;
-    const translateX = -(itemWidthPercent * (currentIndex + itemsToShow));
-    return `translateX(${translateX}%)`;
-  };
 
   // Calculate appropriate classes for the slider items based on screen size
   const getItemWidthClasses = () => {

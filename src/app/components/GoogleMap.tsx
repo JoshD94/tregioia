@@ -119,9 +119,8 @@ export default function GoogleMap({ locations, selectedLocation, showStreetView 
 
     return () => {
       markersRef.current.forEach(marker => marker.setMap(null));
-      if (map) {
-        google.maps.event.clearInstanceListeners(map);
-      }
+      markersRef.current = [];
+      infoWindowsRef.current = [];
     };
   }, [locations]);
 

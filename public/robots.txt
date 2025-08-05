@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# Prioritize important pages
+Allow: /flavors
+Allow: /locations
+Allow: /about
+Allow: /contact
+
+# Block admin or development files
+Disallow: /_next/
+Disallow: /api/
+Disallow: /.well-known/
+Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://tregioia.com/sitemap.xml
+
+# Crawl-delay for being respectful to search engines
+Crawl-delay: 1

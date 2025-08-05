@@ -1,6 +1,26 @@
-"use client";
 import React from 'react';
 import Image from 'next/image';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Menu Rasa Es Krim - Tregioia Creamery | Gelato Artisan Jakarta',
+  description: 'Jelajahi menu lengkap rasa es krim alami Tregioia Creamery. Vanilla Bean, Chocolate Decadence, Strawberry Fields dan rasa seasonal spesial lainnya di Jakarta & Tangerang.',
+  keywords: [
+    'menu es krim tregioia',
+    'rasa gelato artisan',
+    'vanilla bean ice cream',
+    'chocolate decadence',
+    'strawberry fields',
+    'seasonal ice cream flavors',
+    'menu gelato jakarta',
+    'es krim alami rasa'
+  ],
+  openGraph: {
+    title: 'Menu Rasa Es Krim Alami - Tregioia Creamery Jakarta',
+    description: 'Menu lengkap rasa es krim alami dan gelato artisan Tregioia Creamery di Jakarta & Tangerang',
+    images: ['/images/img1.jpg'],
+  },
+};
 
 export default function Flavors() {
   const regularFlavors = [

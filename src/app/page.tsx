@@ -13,7 +13,7 @@ export default function Home() {
       <div className="relative h-[60vh] sm:h-[70vh] md:h-[80vh] w-full">
         <Image 
           src="/images/img10.jpg" 
-          alt="Delicious homemade ice cream from Tregioia Creamery"
+          alt="Es krim alami premium Tregioia Creamery Jakarta Tangerang - gelato artisan tanpa bahan pengawet buatan"
           fill
           priority
           sizes="100vw"
@@ -22,10 +22,10 @@ export default function Home() {
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-2 sm:mb-4 drop-shadow-lg">
-            Tregioia Creamery
+            Tregioia Creamery - Es Krim Alami Jakarta & Tangerang
           </h1>
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-center max-w-2xl mb-4 sm:mb-8 drop-shadow-md">
-            Artisanal ice cream made with love since 2008
+            Gelato artisan premium tanpa bahan pengawet buatan sejak 2008
           </p>
           <Link 
             href="/flavors" 
@@ -41,15 +41,15 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12">
             <div className="md:w-1/2 text-black">
-              <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">What Tregioia Is All About</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Es Krim Alami Terbaik di Jakarta & Tangerang</h2>
               <p className="text-base sm:text-lg mb-3 sm:mb-4">
-                Tregioia Creamery is inspired by our love for creating delicious, yet, healthy food for everyone to enjoy. Our ice cream is crafted with pure and natural ingredients, without added food colorings, synthetic flavorings, emulsifiers, stabilizers or chemical preservatives. Just sugar, milk, cream, and fruits of nature.
+                Tregioia Creamery adalah penyedia es krim alami premium di Jakarta dan Tangerang. Kami membuat gelato artisan berkualitas tinggi tanpa bahan pengawet buatan, pewarna makanan sintetis, perasa buatan, emulsifier, stabilizer atau pengawet kimia. Hanya gula, susu, krim, dan buah-buahan alami.
               </p>
               <p className="text-base sm:text-lg mb-3 sm:mb-4">
-                Our fruit purees are produced in-house from market-bought fruits, selected for good ripeness and quality. Natural cocoa, ground vanilla beans, and real vanilla bean extracts are used for flavoring our ice cream. Oven-roasted nuts, home-made baked cakes and brownies, and freshly-brewed coffee are some of the other ingredients we use.
+                Puree buah kami diproduksi sendiri dari buah-buahan segar yang dipilih dengan kualitas terbaik. Kami menggunakan kakao alami, biji vanilla asli, dan ekstrak vanilla murni untuk memberikan cita rasa terbaik. Kacang panggang oven, kue dan brownies buatan rumah, serta kopi segar adalah beberapa bahan lain yang kami gunakan.
               </p>
               <p className="text-base sm:text-lg mb-3 sm:mb-4">
-                Have a scoop today and spread the joy!
+                Nikmati es krim alami kami hari ini dan rasakan kebahagiaan sejati! Kunjungi 6 lokasi kami di Jakarta dan Tangerang.
               </p>
               <Link 
                 href="/about" 
@@ -64,7 +64,7 @@ export default function Home() {
             <div className="mt-6 md:mt-0 md:w-1/2 relative h-64 sm:h-80 w-full md:h-96">
               <Image 
                 src="/images/img14.jpg" 
-                alt="Making ice cream at Tregioia" 
+                alt="Proses pembuatan es krim alami Tregioia Creamery dengan bahan premium berkualitas tinggi" 
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 style={{objectFit: 'cover', objectPosition: 'center 80%'}}

@@ -1,6 +1,24 @@
-"use client";
 import React from 'react';
 import Image from 'next/image';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Tentang Kami - Tregioia Creamery | Sejarah Es Krim Alami Jakarta',
+  description: 'Pelajari sejarah Tregioia Creamery sejak 2008. Tim ahli es krim alami kami menciptakan gelato artisan terbaik di Jakarta & Tangerang tanpa bahan pengawet buatan.',
+  keywords: [
+    'sejarah tregioia creamery',
+    'es krim alami jakarta',
+    'tim gelato artisan',
+    'winny setiady founder',
+    'tentang tregioia',
+    'es krim tradisional jakarta'
+  ],
+  openGraph: {
+    title: 'Tentang Tregioia Creamery - Sejarah Es Krim Alami Jakarta',
+    description: 'Sejarah Tregioia Creamery sejak 2008 sebagai pembuat es krim alami terbaik di Jakarta & Tangerang',
+    images: ['/images/shop1.jpg'],
+  },
+};
 
 export default function About() {
   const team = [
